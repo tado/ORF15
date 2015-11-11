@@ -1,9 +1,9 @@
 #include "ofApp.h"
 
 void ofApp::setup() {
-	ofSetFrameRate(15);
+	ofSetFrameRate(5);
     soundStream.printDeviceList();
-    soundStream.setDeviceID(2);
+    soundStream.setDeviceID(3);
     soundStream.setup(this, 2, 0, 96000, 2048, 4);
 	fbo.allocate(ofGetWidth(), ofGetHeight());
     audioPixels.allocate(ofGetWidth(), ofGetHeight(), 4);
@@ -42,7 +42,7 @@ void ofApp::audioOut(float* input, int n, int channels) {
 			for(int j = 0; j < channels; j++) {
 				int cur = pixels[curPixel + j];
 				input[i * channels + j] = cur / 128. - 1.;
-                input[i * channels + j] *= .75;
+                input[i * channels + j] *= .5;
             }
 			time+=1;
 		}

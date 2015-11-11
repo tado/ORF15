@@ -29,11 +29,12 @@ play {
 play {
 	var in, out;
 	in = AudioIn.ar(2);
-	in = MidEQ.ar(in, 40, 0.7, 24);
-	out = in;
-	out = LeakDC.ar(out);
-	32.do({ out = AllpassL.ar(out, 0.1, LFNoise2.kr([rrand(0.0, 0.1),rrand(0.0, 0.1)],0.01,0.06), 4.0) });
-	out = GVerb.ar(out);
-	out = CompanderD.ar((in * 1.0) + (out * 0.5));
+	//in = in.dup;
+	//in = LeakDC.ar(MidEQ.ar(in * 0.5, 40, 1.0, 12));
+	out = MidEQ.ar(LeakDC.ar(in), 40, 1.0, 12);
+	//12.do({ out = AllpassN.ar(out, 0.05, LFNoise2.kr([rrand(0.0, 0.1),rrand(0.0, 0.1)],0.01,0.01), 1.0) });
+	out = GVerb.ar(out, 300, 10, drylevel:1.0, earlyreflevel:0.3, taillevel:0.1);
+	out = CompanderD.ar(out);
+	out;
 }
 )
