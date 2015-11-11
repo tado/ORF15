@@ -12,17 +12,17 @@ void ofApp::setup() {
 }
 
 void ofApp::update() {
-    shader.load("", "bytebeat.frag");
+    bytebeatShader.load("", "bytebeat.frag");
 }
 
 void ofApp::draw() {
 	ofSetColor(255);
 	
 	fbo.begin();
-	shader.begin();
+	bytebeatShader.begin();
 	ofFill();
     ofDrawRectangle(0, 0, fbo.getWidth(), fbo.getHeight());
-	shader.end();
+	bytebeatShader.end();
 	fbo.end();
 	fbo.draw(0, 0);
 	fbo.readToPixels(audioPixels);
@@ -30,7 +30,6 @@ void ofApp::draw() {
 
 
 void ofApp::audioOut(float* input, int n, int channels) {
-	//unsigned char* pixels = audioPixels.getPixels();
     unsigned char* pixels = audioPixels.getData();
     
 	int wh = audioPixels.getWidth() * audioPixels.getHeight();

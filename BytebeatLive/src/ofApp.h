@@ -28,7 +28,7 @@ public:
     void audioOut(float * input, int bufferSize, int nChannels);
 
     ofSoundStream soundStream;
-    ofShader shader;
+    ofShader bytebeatShader;
 	ofFbo fbo;
 	ofPixels audioPixels;
 	unsigned long time;
