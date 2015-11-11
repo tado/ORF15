@@ -11,15 +11,18 @@ public:
 	void draw();
     void exit();
     void audioOut(float * input, int bufferSize, int nChannels);
+    void keyPressed(int key);
     
     ofxAutoReloadedShader bytebeatShader;
+    ofxAutoReloadedShader fxShader;
+    ofFbo bytebeatFbo;
+    ofFbo fxFbo;
     ofxSCSynth *fx;
-    
-	ofFbo fbo;
 	ofPixels audioPixels;
     ofSoundStream soundStream;
 	unsigned long time;
 	unsigned int rateDivider;
+    bool useFx;
 };
 
 // (t*((t>>12|t>>8)&63&t>>4));// viznut-0
