@@ -2,9 +2,10 @@
 const int width = 1920*1080;
 void main() {
   int t = int(gl_FragCoord.y) * width + int(gl_FragCoord.x);
-  int v =
 
-    0;
+  int v =
+    (t*2|t>>15) & (t*3|t>>11)
+    ;
 
   gl_FragColor = vec4(vec3(float(v % 256) / 256.),1.);
 }

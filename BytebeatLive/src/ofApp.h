@@ -9,13 +9,15 @@ public:
 	void setup();
 	void update();
 	void draw();
-
+    void exit();
     void audioOut(float * input, int bufferSize, int nChannels);
-
-    ofSoundStream soundStream;
+    
     ofxAutoReloadedShader bytebeatShader;
+    ofxSCSynth *fx;
+    
 	ofFbo fbo;
 	ofPixels audioPixels;
+    ofSoundStream soundStream;
 	unsigned long time;
 	unsigned int rateDivider;
 };
