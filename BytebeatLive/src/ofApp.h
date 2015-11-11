@@ -1,9 +1,25 @@
 #pragma once
 
 #include "ofMain.h"
-//#include "ofAutoShader.h"
+#include "ofxAutoReloadedShader.h"
+#include "ofxSuperCollider.h"
 
-// some examples
+class ofApp : public ofBaseApp {
+public:
+	void setup();
+	void update();
+	void draw();
+
+    void audioOut(float * input, int bufferSize, int nChannels);
+
+    ofSoundStream soundStream;
+    ofxAutoReloadedShader bytebeatShader;
+	ofFbo fbo;
+	ofPixels audioPixels;
+	unsigned long time;
+	unsigned int rateDivider;
+};
+
 // (t*((t>>12|t>>8)&63&t>>4));// viznut-0
 // (t*((t>>9|t>>13)&25&t>>6);}// visy-0
 // ((t*(t>>8*(t>>15|t>>8)&(20|(t>>19)*5>>t|t>>3))));// visy-1
@@ -18,19 +34,3 @@
 // ((t>>7|t|t>>6)*10+4*(t&t>>13|t>>6), viznut);
 // (((t&4096)?((t*(t^t%255)|(t>>4))>>1):(t>>3)|((t&8192)?t<<2:t)), skurk);
 // (((t*(t>>8|t>>9)&46&t>>8))^(t&t>>13|t>>6), xpansive);
-	
-class ofApp : public ofBaseApp {
-public:
-	void setup();
-	void update();
-	void draw();
-
-    void audioOut(float * input, int bufferSize, int nChannels);
-
-    ofSoundStream soundStream;
-    ofShader bytebeatShader;
-	ofFbo fbo;
-	ofPixels audioPixels;
-	unsigned long time;
-	unsigned int rateDivider;
-};

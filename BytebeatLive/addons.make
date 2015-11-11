@@ -1,0 +1,3 @@
+ofxAutoReloadedShader
+ofxOsc
+ofxSuperCollider

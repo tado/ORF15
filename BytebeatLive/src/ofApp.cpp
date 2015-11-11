@@ -1,7 +1,7 @@
 #include "ofApp.h"
 
 void ofApp::setup() {
-	ofSetFrameRate(5);
+	//ofSetFrameRate();
     soundStream.printDeviceList();
     soundStream.setDeviceID(3);
     soundStream.setup(this, 2, 0, 96000, 2048, 4);
@@ -9,10 +9,11 @@ void ofApp::setup() {
     audioPixels.allocate(ofGetWidth(), ofGetHeight(), 4);
 	time = 0;
     rateDivider = 8;
+    
+    bytebeatShader.load("bytebeat");
 }
 
 void ofApp::update() {
-    bytebeatShader.load("", "bytebeat.frag");
 }
 
 void ofApp::draw() {
