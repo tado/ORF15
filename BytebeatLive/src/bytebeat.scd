@@ -1,10 +1,11 @@
 (
 SynthDef("bytebeatFx", {
 	arg amp = 0.2;
-	var in, out;
+	var in, eq1, eq2, out;
 	in = AudioIn.ar(2);
-	out = MidEQ.ar(LeakDC.ar(in), 2000, 1.0, 18);
-	out = MidEQ.ar(LeakDC.ar(in), 80, 1.0, 18);
+	eq1 = MidEQ.ar(LeakDC.ar(in), 8000, 0.7, 12);
+	eq2 = MidEQ.ar(LeakDC.ar(in), 50, 1.0, 20);
+	out = (eq1 + eq2) * 0.5;
 	out = GVerb.ar(out, 300, 3, drylevel:1.0, earlyreflevel:0.2, taillevel:0.2);
 	out = CompanderD.ar(out) * amp;
 	Out.ar(0, out);
