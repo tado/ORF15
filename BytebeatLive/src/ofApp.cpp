@@ -2,22 +2,25 @@
 
 void ofApp::setup() {
     soundStream.printDeviceList();
-    soundStream.setDeviceID(2);
-    soundStream.setup(this, 2, 0, 96000, 2048, 4);
+    soundStream.setDeviceID(3);
+    soundStream.setup(this, 2, 0, 96000, 1024, 4);
     bytebeatFbo.allocate(ofGetWidth(), ofGetHeight());
     fxFbo.allocate(ofGetWidth(), ofGetHeight());
     audioPixels.allocate(ofGetWidth(), ofGetHeight(), 4);
 	time = 0;
     rateDivider = 12;
     useFx = false;
+    sawNum = 0;
     
     bytebeatShader.load("bytebeat");
     fxShader.load("fxShader");
     bytebeatShader.setMillisBetweenFileCheck(100);
     
+    sawFx = new ofxSCSynth("col_closefx");
+    sawFx->create();
     fx = new ofxSCSynth("bytebeatFx");
     fx->create();
-    fx->set("amp", 0.5);
+    fx->set("amp", 0.4);
 }
 
 void ofApp::update() {
@@ -26,6 +29,11 @@ void ofApp::update() {
 void ofApp::exit(){
     fx->free();
     delete fx;
+    sawFx->free();
+    delete sawFx;
+    for (int i = 0; i < saws.size(); i++) {
+        saws[i]->synth->free();
+    }
 }
 
 void ofApp::draw() {
@@ -79,6 +87,13 @@ void ofApp::keyPressed(int key){
             useFx = true;
         } else {
             useFx = false;
+        }
+    }
+    if (key == 'z') {
+        if (saws.size() < 19) {
+            SawSynth *saw = new SawSynth(sawNum);
+            sawNum++;
+            saws.push_back(saw);
         }
     }
 }

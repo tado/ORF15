@@ -1,3 +1,4 @@
 ofxAutoReloadedShader
 ofxOsc
 ofxSuperCollider
+ofxSuperColliderServer

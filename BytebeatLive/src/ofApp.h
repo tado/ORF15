@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxAutoReloadedShader.h"
 #include "ofxSuperCollider.h"
+#include "SawSynth.h"
 
 class ofApp : public ofBaseApp {
 public:
@@ -17,7 +18,9 @@ public:
     ofxAutoReloadedShader fxShader;
     ofFbo bytebeatFbo;
     ofFbo fxFbo;
-    ofxSCSynth *fx;
+    ofxSCSynth *fx, *sawFx;
+    deque<SawSynth *> saws;
+    int sawNum;
 	ofPixels audioPixels;
     ofSoundStream soundStream;
 	unsigned long time;
