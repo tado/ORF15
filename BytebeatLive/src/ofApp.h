@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxAutoReloadedShader.h"
 #include "ofxSuperCollider.h"
+#include "ofxPostProcessing.h"
 #include "SawSynth.h"
 
 class ofApp : public ofBaseApp {
@@ -15,9 +16,7 @@ public:
     void keyPressed(int key);
     
     ofxAutoReloadedShader bytebeatShader;
-    ofxAutoReloadedShader fxShader;
     ofFbo bytebeatFbo;
-    ofFbo fxFbo;
     ofxSCSynth *fx, *sawFx;
     deque<SawSynth *> saws;
     int sawNum;
@@ -25,7 +24,12 @@ public:
     ofSoundStream soundStream;
 	unsigned long time;
 	unsigned int rateDivider;
-    bool useFx;
+    
+    ofxPostProcessing *post;
+    NoiseWarpPass::Ptr noise;
+    RGBShiftPass::Ptr shift;
+    float currentNoiseAmp;
+    float setNoiseAmp;
 };
 
 // (t*((t>>12|t>>8)&63&t>>4));// viznut-0
