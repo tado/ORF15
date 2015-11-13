@@ -2,3 +2,4 @@ ofxAutoReloadedShader
 ofxOsc
 ofxPostProcessing
 ofxSuperCollider
+ofxXmlSettings

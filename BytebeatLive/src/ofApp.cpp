@@ -17,7 +17,7 @@ void ofApp::setup() {
     sawFx->create();
     fx = new ofxSCSynth("bytebeatFx");
     fx->create();
-    fx->set("amp", 0.15);
+    fx->set("amp", 0.12);
 
     currentNoiseAmp = setNoiseAmp = 0.0;
     post = new ofxPostProcessing();
@@ -29,7 +29,25 @@ void ofApp::setup() {
 }
 
 void ofApp::update() {
-    currentNoiseAmp += (setNoiseAmp - currentNoiseAmp) / 1000.0;
+    xml.load("synthSettings.xml");
+    while (sawNum < xml.getValue("sawNum", 0)) {
+        SawSynth *saw = new SawSynth(sawNum);
+        saws.push_back(saw);
+        if (setNoiseAmp == 0) {
+            setNoiseAmp = 0.001;
+        } else {
+            setNoiseAmp *= 1.4;
+        }
+        sawNum++;
+    }
+    while (sawNum > xml.getValue("sawNum", 0)) {
+        saws[saws.size()-1]->synth->free();
+        saws.pop_back();
+        setNoiseAmp /= 1.4;
+        sawNum--;
+    }
+    
+    currentNoiseAmp += (setNoiseAmp - currentNoiseAmp) / 100.0;
     noise->setAmplitude(currentNoiseAmp);
 }
 

@@ -4,6 +4,7 @@
 #include "ofxAutoReloadedShader.h"
 #include "ofxSuperCollider.h"
 #include "ofxPostProcessing.h"
+#include "ofxXmlSettings.h"
 #include "SawSynth.h"
 
 class ofApp : public ofBaseApp {
@@ -24,12 +25,13 @@ public:
     ofSoundStream soundStream;
 	unsigned long time;
 	unsigned int rateDivider;
-    
+
     ofxPostProcessing *post;
     NoiseWarpPass::Ptr noise;
-    RGBShiftPass::Ptr shift;
     float currentNoiseAmp;
     float setNoiseAmp;
+    
+    ofxXmlSettings xml;
 };
 
 // (t*((t>>12|t>>8)&63&t>>4));// viznut-0
