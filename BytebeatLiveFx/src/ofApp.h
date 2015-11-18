@@ -17,7 +17,9 @@ public:
     void keyPressed(int key);
     
     ofxAutoReloadedShader bytebeatShader;
+    ofxAutoReloadedShader glitchShader;
     ofFbo bytebeatFbo;
+    ofFbo fxFbo;
     ofxSCSynth *fx, *sawFx;
     deque<SawSynth *> saws;
     int sawNum;

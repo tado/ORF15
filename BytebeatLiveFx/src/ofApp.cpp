@@ -5,6 +5,7 @@ void ofApp::setup() {
     soundStream.setDeviceID(3);
     soundStream.setup(this, 2, 0, 96000, 1024, 4);
     bytebeatFbo.allocate(ofGetWidth(), ofGetHeight());
+    fxFbo.allocate(ofGetWidth(), ofGetHeight());
     audioPixels.allocate(ofGetWidth(), ofGetHeight(), 4);
     time = 0;
     rateDivider = 12;
@@ -12,6 +13,9 @@ void ofApp::setup() {
     
     bytebeatShader.load("bytebeat");
     bytebeatShader.setMillisBetweenFileCheck(100);
+    
+    glitchShader.load("glitch");
+    glitchShader.setMillisBetweenFileCheck(100);
     
     sawFx = new ofxSCSynth("col_closefx");
     sawFx->create();
@@ -65,18 +69,27 @@ void ofApp::draw() {
     ofSetColor(255);
     
     bytebeatFbo.begin();
-    
     bytebeatShader.begin();
     ofFill();
     ofDrawRectangle(0, 0, bytebeatFbo.getWidth(), bytebeatFbo.getHeight());
     bytebeatShader.end();
+    glitchShader.end();
     bytebeatFbo.end();
     
-    post->begin();
+    fxFbo.begin();
+    glitchShader.begin();
+    glitchShader.setUniform1f("u_time", ofGetElapsedTimef());
+    glitchShader.setUniform1f("rand" ,ofRandom(1));
     bytebeatFbo.draw(0, 0);
-    post->end();
+    glitchShader.end();
+    fxFbo.end();
     
-    bytebeatFbo.readToPixels(audioPixels);
+    fxFbo.readToPixels(audioPixels);
+    
+    post->begin();
+    fxFbo.draw(0,0);
+    post->end();
+
 }
 
 void ofApp::audioOut(float* input, int n, int channels) {

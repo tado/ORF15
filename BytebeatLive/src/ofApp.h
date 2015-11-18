@@ -28,6 +28,7 @@ public:
 
     ofxPostProcessing *post;
     NoiseWarpPass::Ptr noise;
+    RGBShiftPass::Ptr shift;
     float currentNoiseAmp;
     float setNoiseAmp;
     

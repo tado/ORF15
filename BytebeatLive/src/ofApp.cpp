@@ -22,6 +22,9 @@ void ofApp::setup() {
     currentNoiseAmp = setNoiseAmp = 0.0;
     post = new ofxPostProcessing();
     post->init(ofGetWidth(), ofGetHeight());
+    shift = post->createPass<RGBShiftPass>();
+    shift->setAmount(0.0);
+    shift->setEnabled(true);
     noise = post->createPass<NoiseWarpPass>();
     noise->setAmplitude(currentNoiseAmp);
     noise->setFrequency(8.0);
@@ -49,6 +52,7 @@ void ofApp::update() {
     
     currentNoiseAmp += (setNoiseAmp - currentNoiseAmp) / 100.0;
     noise->setAmplitude(currentNoiseAmp);
+    shift->setAmount(currentNoiseAmp);
 }
 
 void ofApp::exit(){
