@@ -11,7 +11,7 @@ SawSynth::SawSynth(int n){
     
     synth = new ofxSCSynth("col_closesaw");
     synth->set("gate", 1);
-    synth->set("amp", 0.4);
+    synth->set("amp", 0.7);
     synth->set("rq", 1.0);
     synth->set("n", nth);
     synth->set("detune", detune);

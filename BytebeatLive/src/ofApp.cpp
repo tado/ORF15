@@ -17,7 +17,7 @@ void ofApp::setup() {
     sawFx->create();
     fx = new ofxSCSynth("bytebeatFx");
     fx->create();
-    fx->set("amp", 0.25);
+    fx->set("amp", 0.2);
 
     currentNoiseAmp = setNoiseAmp = 0.0;
     post = new ofxPostProcessing();
@@ -52,7 +52,7 @@ void ofApp::update() {
     
     currentNoiseAmp += (setNoiseAmp - currentNoiseAmp) / 100.0;
     noise->setAmplitude(currentNoiseAmp);
-    shift->setAmount(currentNoiseAmp);
+    shift->setAmount(currentNoiseAmp*0.2);
 }
 
 void ofApp::exit(){
