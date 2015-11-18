@@ -6,7 +6,6 @@ void main() {
   int v =
     0
     ;
-
   gl_FragColor = vec4(vec3(float(v % 256) / 256.),1.);
 
 }
