@@ -39,3 +39,5 @@ SynthDef("col_closefx", {
 
 Synth("col_closefx");
 Synth("col_closesaw",[n:0, gate:1]);
+
+{SinOsc.ar().dup}.play
