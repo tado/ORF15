@@ -4,7 +4,7 @@ void main() {
   int t = int(gl_FragCoord.y) * width + int(gl_FragCoord.x);
 
   int v =
-    (t >> 1 ^ t * 2)
+    t>>2
     ;
   gl_FragColor = vec4(vec3(float(v % 256) / 256.),1.);
 

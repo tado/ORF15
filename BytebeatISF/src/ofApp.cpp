@@ -21,6 +21,8 @@ void ofApp::setup() {
     chain = new ofxISF::Chain();
     chain->setup(ofGetWidth(), ofGetHeight(), GL_RGB32F);
     chain->setImage(bytebeatFbo.getTexture());
+    chain->load("ISF/Pixellate.fs");
+    chain->load("ISF/Quad Tile.fs");
     chain->load("ISF/RGB Halftone-lookaround.fs");
     chain->load("ISF/Strobe.fs");
     chain->load("ISF/Convergence.fs");
@@ -28,8 +30,6 @@ void ofApp::setup() {
     chain->load("ISF/Pixel Shifter.fs");
     chain->load("ISF/KaleidoCenter.fs");
     chain->load("ISF/Kaleidoscope Tile.fs");
-    chain->load("ISF/Pixellate.fs");
-    chain->load("ISF/Quad Tile.fs");
     chain->load("ISF/Meta Image.fs");
     //chain->load("ISF/Noise Blur 4dl.fs");
     for (int i = 0; i < chain->size(); i++) {
