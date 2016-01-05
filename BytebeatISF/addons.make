@@ -1,0 +1,6 @@
+ofxAutoReloadedShader
+ofxISF
+ofxOsc
+ofxPostProcessing
+ofxSuperCollider
+ofxXmlSettings

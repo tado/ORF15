@@ -2,7 +2,7 @@
 
 void ofApp::setup() {
     soundStream.printDeviceList();
-    soundStream.setDeviceID(3);
+    soundStream.setDeviceID(2);
     soundStream.setup(this, 2, 0, 96000, 1024, 4);
     bytebeatFbo.allocate(ofGetWidth(), ofGetHeight());
     audioPixels.allocate(ofGetWidth(), ofGetHeight(), 4);
