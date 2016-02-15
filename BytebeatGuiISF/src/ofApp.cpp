@@ -34,22 +34,25 @@ void ofApp::exit(){
 
 void ofApp::draw() {
     ofSetColor(255);
+    bytebeatFbo.begin();
+    bytebeatShader.begin();
+    ofFill();
+    ofDrawRectangle(0, 0, bytebeatFbo.getWidth(), bytebeatFbo.getHeight());
+    bytebeatShader.end();
+    bytebeatFbo.end();
+    
     if (chain.size() > 0) {
-        bytebeatFbo.begin();
-        bytebeatShader.begin();
-        ofFill();
-        ofDrawRectangle(0, 0, bytebeatFbo.getWidth(), bytebeatFbo.getHeight());
-        bytebeatShader.end();
-        bytebeatFbo.end();
-        
         fxFbo.begin();
         chain.draw(0, 0);
         fxFbo.end();
         fxFbo.readToPixels(audioPixels);
         fxFbo.draw(0, 0);
-        
-        gui.draw();
+    } else {
+        bytebeatFbo.readToPixels(audioPixels);
+        bytebeatFbo.draw(0, 0);
     }
+    
+    gui.draw();
 }
 
 void ofApp::audioOut(float* input, int n, int channels) {
@@ -72,36 +75,15 @@ void ofApp::audioOut(float* input, int n, int channels) {
 }
 
 void ofApp::keyPressed(int key){
-    if (key == '1') {
-        chain.toggle(0);
-    }
-    if (key == '2') {
-        chain.toggle(1);
-    }
-    if (key == '3') {
-        chain.toggle(2);
-    }
-    if (key == '4') {
-        chain.toggle(3);
-    }
-    if (key == '5') {
-        chain.toggle(4);
-    }
-    if (key == '6') {
-        chain.toggle(5);
-    }
-    if (key == '7') {
-        chain.toggle(6);
-    }
-    if (key == '8') {
-        chain.toggle(7);
-    }
-    if (key == '9') {
-        chain.toggle(8);
-    }
-    if (key == '0') {
-        for (int i = 0; i < chain.size(); i++) {
-            chain.toggle(i);
+    int num = key - 49;
+    if (chain.size() > num) {
+        bool enable = gui.gui.getGroup(chain.getShader(num)->getName()).getToggle("enable");
+        if (enable) {
+            gui.gui.getGroup(chain.getShader(num)->getName()).getToggle("enable") = false;
+            gui.gui.getGroup(chain.getShader(num)->getName()).minimize();
+        } else {
+            gui.gui.getGroup(chain.getShader(num)->getName()).getToggle("enable") = true;
+            gui.gui.getGroup(chain.getShader(num)->getName()).maximize();
         }
     }
 }
