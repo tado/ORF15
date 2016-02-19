@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "BytebeatGenerator.hpp"
 
 class ofApp : public ofBaseApp{
     
@@ -8,6 +9,7 @@ public:
     void setup();
     void update();
     void draw();
+    void loadData();
     
     void keyPressed(int key);
     void keyReleased(int key);
@@ -21,14 +23,11 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     void audioOut(float * input, int bufferSize, int nChannels);
+    template <typename List>
+    void split(const string& s, const string& delim, List& result);
     
     ofSoundStream soundStream;
-    ofShader bytebeatShader;
-    ofFbo bytebeatFbo;
-    int rateDivider;
+    vector<BytebeatGenerator *> bytebeats;
     unsigned long time;
-    
-    string bytebeatHeader;
-    string bytebeatFooter;
-    ofPixels audioPixels;
+    unsigned int rateDivider;
 };

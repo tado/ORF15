@@ -21,7 +21,7 @@ public:
     ofFbo bytebeatFbo;
     ofFbo fxFbo;
     ofxSCSynth *fx;
-	ofPixels audioPixels;
+    ofPixels audioPixels;
     ofSoundStream soundStream;
     //ofSoundBuffer soundStream;
 	unsigned long time;
