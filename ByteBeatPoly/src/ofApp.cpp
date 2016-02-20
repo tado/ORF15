@@ -25,6 +25,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    ofSetColor(255);
     ofPushMatrix();
     for (int i = 0; i < bytebeats.size(); i++) {
         bytebeats[i]->draw();

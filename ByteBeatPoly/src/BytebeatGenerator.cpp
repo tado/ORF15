@@ -41,16 +41,24 @@ void BytebeatGenerator::update(){
 }
 
 void BytebeatGenerator::draw(){
+    ofSetColor(255);
     bytebeatFbo.begin();
     ofClear(0);
     bytebeatShader.begin();
-    ofSetColor(255);
     ofFill();
     ofDrawRectangle(0, 0, bytebeatFbo.getWidth(), bytebeatFbo.getHeight());
     bytebeatShader.end();
     bytebeatFbo.end();
     bytebeatFbo.draw(0, 0);
     bytebeatFbo.readToPixels(audioPixels);
+
+    int wh = audioPixels.getWidth() * audioPixels.getHeight();
+    int curTime = (time / rateDivider) % wh;
+    
+    ofDrawLine(0, curTime / width, width, curTime / width);
+    ofSetColor(255, 0, 0);
+    ofDrawRectangle(curTime % width, curTime / width, 8, 8);
+    ofSetColor(255);
 }
 
 void BytebeatGenerator::audioOut(){

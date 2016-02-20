@@ -21,7 +21,7 @@ public:
     ofFbo bytebeatFbo;
     ofPixels audioPixels;
     int rateDivider;
-    long time;
+    int time;
     
     string bytebeatHeader;
     string bytebeatFooter;
