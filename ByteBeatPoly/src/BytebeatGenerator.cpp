@@ -11,7 +11,7 @@
 BytebeatGenerator::BytebeatGenerator(int _bufferSize, int _nChannels){
     bufferSize = _bufferSize;
     nChannels = _nChannels;
-    rateDivider = 10;
+    rateDivider = 12;
     time = 0;
     pan = ofRandom(0.4, 0.6);
     output = new float[bufferSize * nChannels];

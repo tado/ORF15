@@ -11,6 +11,7 @@ void ofApp::setup(){
     soundStream.setup(this, nChannels, 0, 96000, bufferSize, 4);
     ofHideCursor();
     loadData();
+    time = 0;
 }
 
 //--------------------------------------------------------------
@@ -41,6 +42,7 @@ void ofApp::audioOut(float* output, int n, int channels) {
             for(int j = 0; j < channels; j++) {
                 output[i * channels + j] += bytebeats[k]->output[i * channels + j] * (1.0 / bytebeats.size());
             }
+            time++;
         }
     }
 }
@@ -61,6 +63,7 @@ void ofApp::loadData(){
         BytebeatGenerator *bg = new BytebeatGenerator(bufferSize, nChannels);
         bg->height = ofGetHeight() / beatStr.size();
         bg->setup();
+        bg->time = time;
         bg->beat = beatStr[i] + ";";
         bytebeats.push_back(bg);
     }

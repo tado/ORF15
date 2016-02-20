@@ -31,4 +31,5 @@ public:
     int bufferSize;
     int nChannels;
     string lastBeat;
+    int time;
 };
