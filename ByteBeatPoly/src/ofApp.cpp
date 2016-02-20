@@ -40,7 +40,8 @@ void ofApp::audioOut(float* output, int n, int channels) {
         bytebeats[k]->audioOut();
         for(int i = 0; i < n; i++) {
             for(int j = 0; j < channels; j++) {
-                output[i * channels + j] += bytebeats[k]->output[i * channels + j] * (1.0 / bytebeats.size());
+                //output[i * channels + j] += bytebeats[k]->output[i * channels + j] * (1.0 / bytebeats.size());
+                output[i * channels + j] += bytebeats[k]->output[i * channels + j];
             }
             time++;
         }
@@ -54,11 +55,26 @@ vector<string> ofApp::split(const string &str, char delim){
 }
 
 void ofApp::loadData(){
-    bytebeats.clear();
     string data = ofBufferFromFile("bytebeat.txt").getText();
     lastBeat = data;
-    data = data.substr(0, data.length()-1);
+    if (data.substr(0, 1) == "d" && bytebeats.size()>0) {
+        int n = atoi(data.substr(1, data.length()).c_str());
+        if (n < bytebeats.size()) {
+            bytebeats.erase(bytebeats.begin() + n);
+        }
+    } else {
+        BytebeatGenerator *bg = new BytebeatGenerator(bufferSize, nChannels);
+        bg->height = ofGetHeight();
+        bg->setup();
+        bg->time = time;
+        bg->beat = data;
+        bytebeats.push_back(bg);
+    }
+
+    /*
+     data = data.substr(0, data.length()-1);
     vector<string> beatStr = split(data, ';');
+    bytebeats.clear();
     for (int i = 0; i < beatStr.size(); i++) {
         BytebeatGenerator *bg = new BytebeatGenerator(bufferSize, nChannels);
         bg->height = ofGetHeight() / beatStr.size();
@@ -67,7 +83,7 @@ void ofApp::loadData(){
         bg->beat = beatStr[i] + ";";
         bytebeats.push_back(bg);
     }
-    
+     */
 }
 
 //--------------------------------------------------------------

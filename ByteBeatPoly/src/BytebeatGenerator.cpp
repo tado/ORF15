@@ -52,13 +52,14 @@ void BytebeatGenerator::draw(){
     bytebeatFbo.draw(0, 0);
     bytebeatFbo.readToPixels(audioPixels);
 
+    /*
     int wh = audioPixels.getWidth() * audioPixels.getHeight();
     int curTime = (time / rateDivider) % wh;
-    
     ofDrawLine(0, curTime / width, width, curTime / width);
     ofSetColor(255, 0, 0);
     ofDrawRectangle(curTime % width, curTime / width, 8, 8);
     ofSetColor(255);
+     */
 }
 
 void BytebeatGenerator::audioOut(){
