@@ -12,7 +12,7 @@
 class BytebeatGenerator {
 public:
     BytebeatGenerator(int bufferSize, int nChannels);
-    void setup(long *time);
+    void setup();
     void update();
     void draw();
     void audioOut();
@@ -21,7 +21,7 @@ public:
     ofFbo bytebeatFbo;
     ofPixels audioPixels;
     int rateDivider;
-    long *time;
+    long time;
     
     string bytebeatHeader;
     string bytebeatFooter;

@@ -11,21 +11,21 @@
 BytebeatGenerator::BytebeatGenerator(int _bufferSize, int _nChannels){
     bufferSize = _bufferSize;
     nChannels = _nChannels;
-    rateDivider = 16;
+    rateDivider = 10;
+    time = 0;
     pan = ofRandom(0.4, 0.6);
     output = new float[bufferSize * nChannels];
     width = ofGetWidth();
     height = ofGetHeight();
 }
 
-void BytebeatGenerator::setup(long *_time){
-    time = _time;
+void BytebeatGenerator::setup(){
     bytebeatFbo.allocate(width, height);
     audioPixels.allocate(width, height, 4);
     
     bytebeatHeader = R"(
     #extension GL_EXT_gpu_shader4 : enable
-    const int width = 1920*1080;
+    const int width = 1920;
     void main() {
         int t = int(gl_FragCoord.y) * width + int(gl_FragCoord.x);
         int v = )";
@@ -57,15 +57,14 @@ void BytebeatGenerator::audioOut(){
     unsigned char* pixels = audioPixels.getData();
     int wh = audioPixels.getWidth() * audioPixels.getHeight();
     int cwh = audioPixels.getNumChannels() * wh;
-    long t = *time;
     if(cwh > 0) {
         for(int i = 0; i < bufferSize; i++) {
-            int curTime = (t / rateDivider) % wh;
+            int curTime = (time / rateDivider) % wh;
             int curPixel = curTime * 4;
             int cur = pixels[curPixel];
-            output[i * nChannels + 0] = (cur / 128. - 1.) * pan * 4.0;
-            output[i * nChannels + 1] = (cur / 128. - 1.) * (1.0 - pan) * 4.0;
-            t++;
+            output[i * nChannels + 0] = (cur / 128. - 1.) * pan * 2.0;
+            output[i * nChannels + 1] = (cur / 128. - 1.) * (1.0 - pan) * 2.0;
+            time++;
         }
     }
 }
