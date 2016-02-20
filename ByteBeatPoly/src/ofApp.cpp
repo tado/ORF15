@@ -3,10 +3,13 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofSetFrameRate(60);
+    ofBackground(0);
     soundStream.printDeviceList();
     soundStream.setDeviceID(4);
-    soundStream.setup(this, 2, 0, 96000, 1024, 4);
-    
+    nChannels = 2;
+    bufferSize = 1024;
+    time = 0;
+    soundStream.setup(this, nChannels, 0, 96000, bufferSize, 4);
     ofHideCursor();
     loadData();
 }
@@ -15,6 +18,9 @@ void ofApp::setup(){
 void ofApp::update(){
     for (int i = 0; i < bytebeats.size(); i++) {
         bytebeats[i]->update();
+    }
+    if (lastBeat != ofBufferFromFile("bytebeat.txt").getText()) {
+        loadData();
     }
 }
 
@@ -35,40 +41,31 @@ void ofApp::audioOut(float* output, int n, int channels) {
             for(int j = 0; j < channels; j++) {
                 output[i * channels + j] += bytebeats[k]->output[i * channels + j] * (1.0 / bytebeats.size());
             }
+            time++;
         }
     }
 }
 
-template <typename List>
-void ofApp::split(const string& s, const string& delim, List& result)
-{
-    result.clear();
-    using string = string;
-    string::size_type pos = 0;
-    while(pos != string::npos ){
-        string::size_type p = s.find(delim, pos);
-        if(p == string::npos){
-            result.push_back(s.substr(pos));
-            break;
-        }
-        else {
-            result.push_back(s.substr(pos, p - pos));
-        }
-        pos = p + delim.size();
-    }
+vector<string> ofApp::split(const string &str, char delim){
+    istringstream iss(str); string tmp; vector<string> res;
+    while(getline(iss, tmp, delim)) res.push_back(tmp);
+    return res;
 }
 
 void ofApp::loadData(){
     bytebeats.clear();
     string data = ofBufferFromFile("bytebeat.txt").getText();
-    vector<string> beatStr;
-    split(data, ";", beatStr);
+    lastBeat = data;
+    data = data.substr(0, data.length()-1);
+    vector<string> beatStr = split(data, ';');
     for (int i = 0; i < beatStr.size(); i++) {
-        BytebeatGenerator *bg = new BytebeatGenerator();
-        bg->setup();
+        BytebeatGenerator *bg = new BytebeatGenerator(bufferSize, nChannels);
+        bg->height = ofGetHeight() / beatStr.size();
+        bg->setup(&time);
         bg->beat = beatStr[i] + ";";
         bytebeats.push_back(bg);
     }
+    
 }
 
 //--------------------------------------------------------------

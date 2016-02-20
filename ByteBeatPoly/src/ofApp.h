@@ -23,11 +23,13 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     void audioOut(float * input, int bufferSize, int nChannels);
-    template <typename List>
-    void split(const string& s, const string& delim, List& result);
+    vector<string> split(const string &str, char delim);
     
     ofSoundStream soundStream;
     vector<BytebeatGenerator *> bytebeats;
-    unsigned long time;
     unsigned int rateDivider;
+    int bufferSize;
+    int nChannels;
+    string lastBeat;
+    long time;
 };
